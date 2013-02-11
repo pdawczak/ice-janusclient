@@ -1,0 +1,19 @@
+{
+    "name": "Janus client",
+    "description": "Janus manages ICE user accounts",
+    "operations": {
+        "GetUser": {
+            "httpMethod": "GET",
+            "uri": "users/{username}",
+            "summary": "Get a user",
+            "responseClass": "Ice\\JanusClientBundle\\Response\\User",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "name": "ice/janusclient-bundle",
+    "type": "symfony-bundle",
+    "description": "Client for the ICE Janus API",
+    "licence": "MIT",
+    "authors": [
+        {
+            "name": "Stuart Chapman",
+            "email": "stuart.chapman@admin.cam.ac.uk"
+        }
+    ],
+    "require": {
+        "misd/guzzle-bundle": "@stable"
+    },
+    "autoload": {
+        "psr-0": {
+            "Ice\\JanusClientBundle": ""
+        }
+    },
+    "target-dir": "Ice/JanusClientBundle"
+}

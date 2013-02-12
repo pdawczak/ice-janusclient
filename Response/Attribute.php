@@ -5,7 +5,7 @@ namespace Ice\JanusClientBundle\Response;
 use JMS\Serializer\Annotation\SerializedName,
     JMS\Serializer\Annotation\Type;
 
-class UserAttribute
+class Attribute
 {
     /**
      * @var string

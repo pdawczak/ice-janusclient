@@ -14,6 +14,95 @@
                     "required": true
                 }
             }
+        },
+        "CreateUser": {
+            "httpMethod": "POST",
+            "uri": "users",
+            "summary": "Create a user",
+            "responseClass": "Ice\\JanusClientBundle\\Response\\User",
+            "parameters": {
+                "plainPassword": {
+                    "location": "json",
+                    "type": "string",
+                    "required": true
+                },
+                "email": {
+                    "location": "json",
+                    "type": "string",
+                    "required": false
+                },
+                "title": {
+                    "location": "json",
+                    "type": "string",
+                    "required": true
+                },
+                "firstNames": {
+                    "location": "json",
+                    "type": "string",
+                    "required": true
+                },
+                "middleNames": {
+                    "location": "json",
+                    "type": "string",
+                    "required": false
+                },
+                "lastNames": {
+                    "location": "json",
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "UpdateAttribute": {
+            "httpMethod": "PUT",
+            "uri": "users/{username}/attributes/{attributeName}",
+            "summary": "Set a User Attribute",
+            "responseClass": "Ice\\JanusClientBundle\\Response\\Attribute",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                },
+                "attributeName": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                },
+                "value": {
+                    "location": "json",
+                    "type": "string",
+                    "required": true
+                },
+                "updatedBy": {
+                    "location": "json",
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "CreateAttribute": {
+            "httpMethod": "POST",
+            "uri": "users/{username}/attributes",
+            "summary": "Create a new User Attribute",
+            "responseClass": "Ice\\JanusClientBundle\\Response\\Attribute",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                },
+                "fieldName": {
+                    "location": "json",
+                    "type": "string",
+                    "required": true
+                },
+                "value": {
+                    "location": "json",
+                    "type": "string",
+                    "required": true
+                }
+            }
         }
     }
 }

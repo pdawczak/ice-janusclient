@@ -62,7 +62,7 @@ class User
     private $lastNames;
 
     /**
-     * @Type("ArrayCollection<Ice\JanusClientBundle\Response\UserAttribute>")
+     * @Type("ArrayCollection<Ice\JanusClientBundle\Response\Attribute>")
      */
     private $attributes;
 

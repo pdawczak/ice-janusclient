@@ -35,4 +35,28 @@ class JanusClient
         return $user;
     }
 
+
+    public function createUser(array $values)
+    {
+        return $this->client->getCommand('CreateUser', $values)->execute();
+    }
+
+    public function updateAttribute($username, $attributeName, $attributeValue, $updatedBy)
+    {
+        return $this->client->getCommand('UpdateAttribute', array(
+            'username' => $username,
+            'attributeName' => $attributeName,
+            'value' => $attributeValue,
+            'updatedBy' => $updatedBy,
+        ))->execute();
+    }
+
+    public function createAttribute($username, $attributeName, $attributeValue)
+    {
+        return $this->client->getCommand('CreateAttribute', array(
+            'username' => $username,
+            'fieldName' => $attributeName,
+            'value' => $attributeValue,
+        ))->execute();
+    }
 }

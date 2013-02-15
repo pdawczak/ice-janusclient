@@ -103,6 +103,19 @@
                     "required": true
                 }
             }
+        },
+        "GetUsers": {
+            "httpMethod": "GET",
+            "uri": "users{?query*}",
+            "summary": "Get Users with optional filtering",
+            "responseClass": "ArrayCollection<Ice\\JanusClientBundle\\Response\\User>",
+            "parameters": {
+                "query": {
+                    "location": "uri",
+                    "type": "array",
+                    "required": "false"
+                }
+            }
         }
     }
 }

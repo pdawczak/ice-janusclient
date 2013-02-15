@@ -148,4 +148,11 @@ class User
     {
         return $this->attributes;
     }
+
+    public function getAttributeByName($name)
+    {
+        return $this->getAttributes()->filter(function(Attribute $attribute) use ($name) {
+            return $attribute->getFieldName() === $name;
+        })->first();
+    }
 }

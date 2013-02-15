@@ -2,6 +2,10 @@
 
 namespace Ice\JanusClientBundle\Service;
 
+use Ice\JanusClientBundle\Response\User;
+
+use Doctrine\Common\Collections\ArrayCollection;
+
 use Guzzle\Service\Client;
 
 class JanusClient
@@ -57,6 +61,18 @@ class JanusClient
             'username' => $username,
             'fieldName' => $attributeName,
             'value' => $attributeValue,
+        ))->execute();
+    }
+
+    /**
+     * @param array $filters
+     * @return User[]|ArrayCollection
+     */
+    public function getUsers(array $filters = array())
+    {
+
+        return $this->client->getCommand('GetUsers', array(
+            'query' => $filters,
         ))->execute();
     }
 }

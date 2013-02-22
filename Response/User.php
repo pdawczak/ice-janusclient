@@ -24,6 +24,20 @@ class User
     private $username;
 
     /**
+     * @var boolean
+     *
+     * @Type("boolean")
+     */
+    private $enabled;
+
+    /**
+     * @var \DateTime
+     *
+     * @Type("DateTime")
+     */
+    private $lastLogin;
+
+    /**
      * @var string
      *
      * @Type("string")
@@ -154,5 +168,21 @@ class User
         return $this->getAttributes()->filter(function(Attribute $attribute) use ($name) {
             return $attribute->getFieldName() === $name;
         })->first();
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
     }
 }

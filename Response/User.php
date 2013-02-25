@@ -76,6 +76,13 @@ class User
     private $lastNames;
 
     /**
+     * @var \DateTime|null
+     *
+     * @Type("DateTime")
+     */
+    private $dob;
+
+    /**
      * @Type("ArrayCollection<Ice\JanusClientBundle\Response\Attribute>")
      */
     private $attributes;
@@ -184,5 +191,13 @@ class User
     public function getLastLogin()
     {
         return $this->lastLogin;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDob()
+    {
+        return $this->dob;
     }
 }

@@ -50,6 +50,11 @@
                     "location": "json",
                     "type": "string",
                     "required": true
+                },
+                "dob": {
+                    "location": "json",
+                    "type": "string",
+                    "required": true
                 }
             }
         },

@@ -58,6 +58,49 @@
                 }
             }
         },
+        "UpdateUser": {
+            "httpMethod": "PUT",
+            "uri": "users/{username}",
+            "summary": "Update a user",
+            "responseClass": "Ice\\JanusClientBundle\\Response\\User",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                },
+                "email": {
+                    "location": "json",
+                    "type": "string",
+                    "required": false
+                },
+                "title": {
+                    "location": "json",
+                    "type": "string",
+                    "required": true
+                },
+                "firstNames": {
+                    "location": "json",
+                    "type": "string",
+                    "required": true
+                },
+                "middleNames": {
+                    "location": "json",
+                    "type": "string",
+                    "required": false
+                },
+                "lastNames": {
+                    "location": "json",
+                    "type": "string",
+                    "required": true
+                },
+                "dob": {
+                    "location": "json",
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
         "UpdateAttribute": {
             "httpMethod": "PUT",
             "uri": "users/{username}/attributes/{attributeName}",

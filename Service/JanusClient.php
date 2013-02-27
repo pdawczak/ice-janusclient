@@ -45,6 +45,17 @@ class JanusClient
         return $this->client->getCommand('CreateUser', $values)->execute();
     }
 
+    public function updateUser($username, array $values)
+    {
+        $array = array(
+            'username' => $username,
+        );
+
+        $array = array_merge($values, $array);
+
+        return $this->client->getCommand('UpdateUser', $array)->execute();
+    }
+
     public function updateAttribute($username, $attributeName, $attributeValue, $updatedBy)
     {
         return $this->client->getCommand('UpdateAttribute', array(

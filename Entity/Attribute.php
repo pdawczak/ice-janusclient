@@ -1,6 +1,6 @@
 <?php
 
-namespace Ice\JanusClientBundle\Response;
+namespace Ice\JanusClientBundle\Entity;
 
 use JMS\Serializer\Annotation\SerializedName,
     JMS\Serializer\Annotation\Type;

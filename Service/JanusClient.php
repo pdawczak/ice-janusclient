@@ -2,7 +2,7 @@
 
 namespace Ice\JanusClientBundle\Service;
 
-use Ice\JanusClientBundle\Response\User;
+use Ice\JanusClientBundle\Entity\User;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -28,7 +28,7 @@ class JanusClient
 
     /**
      * @param string $username
-     * @return \Ice\JanusClientBundle\Response\User
+     * @return \Ice\JanusClientBundle\Entity\User
      */
     public function getUser($username)
     {

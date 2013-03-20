@@ -6,7 +6,7 @@
             "httpMethod": "GET",
             "uri": "users/{username}",
             "summary": "Get a user",
-            "responseClass": "Ice\\JanusClientBundle\\Response\\User",
+            "responseClass": "Ice\\JanusClientBundle\\Entity\\User",
             "parameters": {
                 "username": {
                     "location": "uri",
@@ -19,7 +19,7 @@
             "httpMethod": "POST",
             "uri": "users",
             "summary": "Create a user",
-            "responseClass": "Ice\\JanusClientBundle\\Response\\User",
+            "responseClass": "Ice\\JanusClientBundle\\Entity\\User",
             "parameters": {
                 "plainPassword": {
                     "location": "json",
@@ -62,7 +62,7 @@
             "httpMethod": "PUT",
             "uri": "users/{username}",
             "summary": "Update a user",
-            "responseClass": "Ice\\JanusClientBundle\\Response\\User",
+            "responseClass": "Ice\\JanusClientBundle\\Entity\\User",
             "parameters": {
                 "username": {
                     "location": "uri",
@@ -105,7 +105,7 @@
             "httpMethod": "PUT",
             "uri": "users/{username}/attributes/{attributeName}",
             "summary": "Set a User Attribute",
-            "responseClass": "Ice\\JanusClientBundle\\Response\\Attribute",
+            "responseClass": "Ice\\JanusClientBundle\\Entity\\Attribute",
             "parameters": {
                 "username": {
                     "location": "uri",
@@ -133,7 +133,7 @@
             "httpMethod": "POST",
             "uri": "users/{username}/attributes",
             "summary": "Create a new User Attribute",
-            "responseClass": "Ice\\JanusClientBundle\\Response\\Attribute",
+            "responseClass": "Ice\\JanusClientBundle\\Entity\\Attribute",
             "parameters": {
                 "username": {
                     "location": "uri",
@@ -156,7 +156,7 @@
             "httpMethod": "GET",
             "uri": "users{?query*}",
             "summary": "Get Users with optional filtering",
-            "responseClass": "ArrayCollection<Ice\\JanusClientBundle\\Response\\User>",
+            "responseClass": "ArrayCollection<Ice\\JanusClientBundle\\Entity\\User>",
             "parameters": {
                 "query": {
                     "location": "uri",

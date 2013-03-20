@@ -7,10 +7,15 @@
         {
             "name": "Stuart Chapman",
             "email": "stuart.chapman@admin.cam.ac.uk"
+        },
+        {
+            "name": "Rob Hogan",
+            "email": "rob.hogan@admin.cam.ac.uk"
         }
     ],
     "require": {
-        "misd/guzzle-bundle": "@stable"
+        "misd/guzzle-bundle": "@stable",
+        "jms/serializer-bundle": "0.12.*@dev"
     },
     "autoload": {
         "psr-0": {

@@ -11,7 +11,6 @@ use Guzzle\Service\Client;
 
 use Ice\JanusClientBundle\Exception\ValidationException;
 use JMS\Serializer\Serializer;
-use Symfony\Component\Validator\Constraints\Valid;
 
 class JanusClient
 {
@@ -67,7 +66,7 @@ class JanusClient
             try{
                 $form = $this->serializer->deserialize(
                     $badResponseException->getResponse()->getBody(true),
-                    'Ice\\JanusClientBundle\\Response\\Form',
+                    'Ice\\JanusClientBundle\\Response\\FormError',
                     'json'
                 );
                 throw new ValidationException($form, 'Validation error', 400, $badResponseException);

@@ -2,37 +2,36 @@
 
 namespace Ice\JanusClientBundle\Entity;
 
-use JMS\Serializer\Annotation\SerializedName,
-    JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation as JMS;
 
 class Attribute
 {
     /**
      * @var string
      *
-     * @Type("string")
-     * @SerializedName("fieldName")
+     * @JMS\Type("string")
+     * @JMS\SerializedName("fieldName")
      */
     private $fieldName;
 
     /**
      * @var string
      *
-     * @Type("string")
+     * @JMS\Type("string")
      */
     private $value;
 
     /**
      * @var \DateTime
      *
-     * @Type("DateTime")
+     * @JMS\Type("DateTime")
      */
     private $created;
 
     /**
      * @var \DateTime|null
      *
-     * @Type("DateTime")
+     * @JMS\Type("DateTime")
      */
     private $updated;
 

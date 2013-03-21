@@ -3,9 +3,9 @@
 namespace Ice\JanusClientBundle\Response;
 
 use JMS\Serializer\Annotation as JMS;
-use Doctrine\Common\Collections\ArrayCollection;
 
-class FormError{
+class FormError
+{
     /**
      * @var FormError[]
      * @JMS\Type("array<string, Ice\JanusClientBundle\Response\Form>")

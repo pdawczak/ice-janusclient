@@ -2,8 +2,7 @@
 
 namespace Ice\JanusClientBundle\Entity;
 
-use JMS\Serializer\Annotation\SerializedName,
-    JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation as JMS;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -12,78 +11,78 @@ class User
     /**
      * @var integer
      *
-     * @Type("integer")
+     * @JMS\Type("integer")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @Type("string")
+     * @JMS\Type("string")
      */
     private $username;
 
     /**
      * @var boolean
      *
-     * @Type("boolean")
+     * @JMS\Type("boolean")
      */
     private $enabled;
 
     /**
      * @var \DateTime
      *
-     * @Type("DateTime")
+     * @JMS\Type("DateTime")
      */
     private $lastLogin;
 
     /**
      * @var string
      *
-     * @Type("string")
+     * @JMS\Type("string")
      */
     private $email;
 
     /**
      * @var string
      *
-     * @Type("string")
+     * @JMS\Type("string")
      */
     private $title;
 
     /**
      * @var string
      *
-     * @Type("string")
-     * @SerializedName("firstNames")
+     * @JMS\Type("string")
+     * @JMS\SerializedName("firstNames")
      */
     private $firstNames;
 
     /**
      * @var string
      *
-     * @Type("string")
-     * @SerializedName("middleNames")
+     * @JMS\Type("string")
+     * @JMS\SerializedName("middleNames")
      */
     private $middleNames;
 
     /**
      * @var string
      *
-     * @Type("string")
-     * @SerializedName("lastNames")
+     * @JMS\Type("string")
+     * @JMS\SerializedName("lastNames")
      */
     private $lastNames;
 
     /**
      * @var \DateTime|null
      *
-     * @Type("DateTime")
+     * @JMS\Type("DateTime")
      */
     private $dob;
 
     /**
-     * @Type("ArrayCollection<Ice\JanusClientBundle\Entity\Attribute>")
+     * @JMS\Type("ArrayCollection<Ice\JanusClientBundle\Entity\Attribute>")
      */
     private $attributes;
 

@@ -2,11 +2,16 @@
 
 namespace Ice\JanusClientBundle\Service;
 
+use Guzzle\Http\Exception\BadResponseException;
 use Ice\JanusClientBundle\Entity\User;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Guzzle\Service\Client;
+
+use Ice\JanusClientBundle\Exception\ValidationException;
+use JMS\Serializer\Serializer;
+use Symfony\Component\Validator\Constraints\Valid;
 
 class JanusClient
 {
@@ -16,11 +21,17 @@ class JanusClient
     private $client;
 
     /**
+     * @var \JMS\Serializer\Serializer
+     */
+    private $serializer;
+
+    /**
      * @param \Guzzle\Service\Client $client
      */
-    public function __construct(Client $client)
+    public function __construct(Client $client, Serializer $serializer)
     {
         $this->client = $client;
+        $this->serializer = $serializer;
         $this->client->setDefaultHeaders(array(
             'Accepts' => 'application/json',
         ));
@@ -40,9 +51,32 @@ class JanusClient
     }
 
 
+    /**
+     * @param array $values
+     * @return mixed
+     * @throws \Exception|\Guzzle\Http\Exception\BadResponseException
+     * @throws \Ice\JanusClientBundle\Exception\ValidationException
+     */
     public function createUser(array $values)
     {
-        return $this->client->getCommand('CreateUser', $values)->execute();
+        try{
+            $user = $this->client->getCommand('CreateUser', $values)->execute();
+            return $user;
+        }
+        catch(BadResponseException $badResponseException){
+            try{
+                $form = $this->serializer->deserialize(
+                    $badResponseException->getResponse()->getBody(true),
+                    'Ice\\JanusClientBundle\\Response\\Form',
+                    'json'
+                );
+                throw new ValidationException($form, 'Validation error', 400, $badResponseException);
+            }
+            catch(\Exception $deserializingException){
+                //We can't improve the exception - just re-throw the original
+                throw $badResponseException;
+            }
+        }
     }
 
     public function updateUser($username, array $values)

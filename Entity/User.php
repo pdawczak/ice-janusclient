@@ -83,7 +83,7 @@ class User
     private $dob;
 
     /**
-     * @Type("ArrayCollection<Ice\JanusClientBundle\Response\Attribute>")
+     * @Type("ArrayCollection<Ice\JanusClientBundle\Entity\Attribute>")
      */
     private $attributes;
 

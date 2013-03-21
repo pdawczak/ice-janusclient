@@ -20,6 +20,13 @@
             "uri": "users",
             "summary": "Create a user",
             "responseClass": "Ice\\JanusClientBundle\\Entity\\User",
+            "errorResponses": [
+                {
+                    "code":400,
+                    "phrase":"Bad request",
+                    "class": "Ice\\JanusClientBundle\\Response\\FormError"
+                }
+            ],
             "parameters": {
                 "plainPassword": {
                     "location": "json",

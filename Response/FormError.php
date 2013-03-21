@@ -8,7 +8,7 @@ class FormError
 {
     /**
      * @var FormError[]
-     * @JMS\Type("array<string, Ice\JanusClientBundle\Response\Form>")
+     * @JMS\Type("array<string, Ice\JanusClientBundle\Response\FormError>")
      * @JMS\AccessType("public_method")
      */
     private $children;

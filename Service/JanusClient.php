@@ -11,7 +11,6 @@ use Guzzle\Service\Client;
 
 use Ice\JanusClientBundle\Exception\ValidationException;
 use JMS\Serializer\Serializer;
-use Symfony\Component\Validator\Constraints\Valid;
 
 class JanusClient
 {
@@ -26,7 +25,8 @@ class JanusClient
     private $serializer;
 
     /**
-     * @param \Guzzle\Service\Client $client
+     * @param Client $client
+     * @param Serializer $serializer
      */
     public function __construct(Client $client, Serializer $serializer)
     {

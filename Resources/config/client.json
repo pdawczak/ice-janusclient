@@ -171,6 +171,19 @@
                     "required": "false"
                 }
             }
+        },
+        "SearchUsers": {
+            "httpMethod": "GET",
+            "uri": "users/search/{term}",
+            "summary": "Search for users",
+            "responseClass": "ArrayCollection<Ice\\JanusClientBundle\\Response\\User>",
+            "parameters": {
+                "term": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                }
+            }
         }
     }
 }

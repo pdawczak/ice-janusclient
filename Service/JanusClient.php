@@ -120,4 +120,16 @@ class JanusClient
             'query' => $filters,
         ))->execute();
     }
+
+    /**
+     * @param string $term Search term
+     *
+     * @return User[]|ArrayCollection
+     */
+    public function searchUsers($term)
+    {
+        return $this->client->getCommand('SearchUsers', array(
+            'term' => $term,
+        ))->execute();
+    }
 }

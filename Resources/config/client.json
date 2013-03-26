@@ -176,7 +176,7 @@
             "httpMethod": "GET",
             "uri": "users/search/{term}",
             "summary": "Search for users",
-            "responseClass": "ArrayCollection<Ice\\JanusClientBundle\\Response\\User>",
+            "responseClass": "ArrayCollection<Ice\\JanusClientBundle\\Entity\\User>",
             "parameters": {
                 "term": {
                     "location": "uri",

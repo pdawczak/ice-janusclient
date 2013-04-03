@@ -73,14 +73,6 @@ class JanusClient
                 throw $badResponseException;
             }
         }
-        catch(GuzzleValidationException $validationException){
-            if(!(isset($command) && $this->responseBodyToValidationException(
-                $command->getResponse()->getBody(true),
-                $validationException)))
-            {
-                throw $validationException;
-            }
-        }
     }
 
     public function updateUser($username, array $values)

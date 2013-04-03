@@ -77,6 +77,23 @@ class FormError
     }
 
     /**
+     * @param bool $recursive
+     * @return array
+     */
+    public function getErrorsAsAssociativeArray($recursive = false)
+    {
+        $errors = array(
+            $this->getName() => $this->errors
+        );
+        if($recursive){
+            foreach($this->getChildren() as $child){
+                $errors = array_merge($errors, $child->getErrorsAsAssociativeArray($recursive));
+            }
+        }
+        return $errors;
+    }
+
+    /**
      * @param string $name
      * @return FormError
      */

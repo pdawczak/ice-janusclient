@@ -74,9 +74,9 @@ class JanusClient
             }
         }
         catch(GuzzleValidationException $validationException){
-            if(isset($command) && !$this->responseBodyToValidationException(
+            if(!(isset($command) && $this->responseBodyToValidationException(
                 $command->getResponse()->getBody(true),
-                $validationException))
+                $validationException)))
             {
                 throw $validationException;
             }

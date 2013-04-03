@@ -11,7 +11,7 @@ class FormError
      * @JMS\Type("array<string, Ice\JanusClientBundle\Response\FormError>")
      * @JMS\AccessType("public_method")
      */
-    private $children;
+    private $children = array();
 
     /**
      * @var string
@@ -29,13 +29,7 @@ class FormError
      * @var string[]
      * @JMS\Type("array<string>")
      */
-    private $errors;
-
-    public function __construct()
-    {
-        $this->children = [];
-        $this->errors = [];
-    }
+    private $errors = array();
 
     /**
      * @param FormError[] $children
@@ -43,6 +37,10 @@ class FormError
      */
     public function setChildren($children)
     {
+        if(null === $children){
+            $this->children = array();
+            return $this;
+        }
         foreach($children as $name=>$child){
             $child->setName($name)->setParent($this);
         }
@@ -77,17 +75,26 @@ class FormError
     }
 
     /**
-     * @param bool $recursive
+     * Return the errors on this form as a map (keyed by name) of lists of strings. A key of "" indicates a top level
+     * error.
+     *
+     * If $includeChildren is false, only errors which directly belong to this object will be returned. The map will
+     * only ever contain one list in this case.
+     *
+     * @param bool $includeChildren
      * @return array
      */
-    public function getErrorsAsAssociativeArray($recursive = false)
+    public function getErrorsAsAssociativeArray($includeChildren = true)
     {
-        $errors = array(
-            $this->getName() => $this->errors
-        );
-        if($recursive){
+        $errors = array();
+        if($directErrors = $this->getErrors()){
+            $errors[$this->getName()] = $directErrors;
+        }
+        if($includeChildren && is_array($this->getChildren())){
             foreach($this->getChildren() as $child){
-                $errors = array_merge($errors, $child->getErrorsAsAssociativeArray($recursive));
+                if(is_array($childErrors = $child->getErrorsAsAssociativeArray($includeChildren))){
+                    $errors = array_merge($errors, $childErrors);
+                }
             }
         }
         return $errors;

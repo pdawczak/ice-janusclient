@@ -8,6 +8,7 @@ use Ice\JanusClientBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Guzzle\Service\Client;
+use Guzzle\Service\Exception\ValidationException as GuzzleValidationException;
 
 use Ice\JanusClientBundle\Exception\ValidationException;
 use JMS\Serializer\Serializer;
@@ -54,28 +55,31 @@ class JanusClient
     /**
      * @param array $values
      * @return mixed
-     * @throws \Exception|\Guzzle\Http\Exception\BadResponseException
+     * @throws \Exception|\Guzzle\Http\Exception\BadResponseException|\Guzzle\Service\Exception\ValidationException
      * @throws \Ice\JanusClientBundle\Exception\ValidationException
      */
     public function createUser(array $values)
     {
         try{
-            $user = $this->client->getCommand('CreateUser', $values)->execute();
+            $command = $this->client->getCommand('CreateUser', $values);
+            $user = $command->execute();
             return $user;
         }
         catch(BadResponseException $badResponseException){
-            try{
-                $form = $this->serializer->deserialize(
-                    $badResponseException->getResponse()->getBody(true),
-                    'Ice\\JanusClientBundle\\Response\\FormError',
-                    'json'
-                );
-            }
-            catch(\Exception $deserializingException){
-                //We can't improve the exception - just re-throw the original
+            if(!$this->responseBodyToValidationException(
+                $badResponseException->getResponse()->getBody(true),
+                $badResponseException))
+            {
                 throw $badResponseException;
             }
-            throw new ValidationException($form, 'Validation error', 400, $badResponseException);
+        }
+        catch(GuzzleValidationException $validationException){
+            if(isset($command) && !$this->responseBodyToValidationException(
+                $command->getResponse()->getBody(true),
+                $validationException))
+            {
+                throw $validationException;
+            }
         }
     }
 
@@ -131,5 +135,26 @@ class JanusClient
         return $this->client->getCommand('SearchUsers', array(
             'term' => $term,
         ))->execute();
+    }
+
+    /**
+     * @param $responseBody
+     * @param \Exception|null $previousException
+     * @return bool false if the exception could not be thrown
+     * @throws \Ice\JanusClientBundle\Exception\ValidationException
+     */
+    private function responseBodyToValidationException($responseBody, $previousException = null){
+        try{
+            $form = $this->serializer->deserialize(
+                $responseBody,
+                'Ice\\JanusClientBundle\\Response\\FormError',
+                'json'
+            );
+        }
+        catch(\Exception $deserializingException){
+            //We can't improve the exception - just re-throw the original
+            return false;
+        }
+        throw new ValidationException($form, 'Validation error', 400, $previousException);
     }
 }

@@ -184,6 +184,12 @@
                     "required": true
                 }
             }
+        },
+        "Authenticate": {
+            "httpMethod": "GET",
+            "uri": "users/authenticate",
+            "summary": "Get a user by their username and password. Must be used with the guzzle Curl Auth plugin",
+            "responseClass": "Ice\\JanusClientBundle\\Entity\\User"
         }
     }
 }

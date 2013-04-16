@@ -3,6 +3,7 @@
 namespace Ice\JanusClientBundle\Service;
 
 use Guzzle\Http\Exception\BadResponseException;
+use Guzzle\Plugin\CurlAuth\CurlAuthPlugin;
 use Ice\JanusClientBundle\Entity\User;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,6 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Guzzle\Service\Client;
 use Guzzle\Service\Exception\ValidationException as GuzzleValidationException;
 
+use Ice\JanusClientBundle\Exception\AuthenticationException;
 use Ice\JanusClientBundle\Exception\ValidationException;
 use JMS\Serializer\Serializer;
 
@@ -126,6 +128,30 @@ class JanusClient
         return $this->client->getCommand('SearchUsers', array(
             'term' => $term,
         ))->execute();
+    }
+
+    /**
+     * @param $username
+     * @param $password
+     * @return User
+     * @throws \Ice\JanusClientBundle\Exception\AuthenticationException when credentials are bad
+     * @throws \Exception|\Guzzle\Http\Exception\BadResponseException when an unknown error (eg 500) occurs
+     */
+    public function authenticate($username, $password)
+    {
+        $this->client->addSubscriber(new CurlAuthPlugin($username, $password));
+        try{
+            return $this->client->getCommand('Authenticate')->execute();
+        }
+        catch(BadResponseException $e){
+            switch($e->getResponse()->getStatus()){
+                case 401:
+                case 403:
+                    throw new AuthenticationException();
+                break;
+            }
+            throw $e;
+        }
     }
 
     /**

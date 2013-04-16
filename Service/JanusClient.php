@@ -137,11 +137,15 @@ class JanusClient
      */
     private function responseBodyToValidationException($responseBody, $previousException = null){
         try{
+            /** @var $form \Ice\JanusClientBundle\Response\FormError */
             $form = $this->serializer->deserialize(
                 $responseBody,
                 'Ice\\JanusClientBundle\\Response\\FormError',
                 'json'
             );
+            if(!$form->getErrorsAsAssociativeArray()){
+                return false;
+            }
         }
         catch(\Exception $deserializingException){
             //We can't improve the exception - just re-throw the original

@@ -86,6 +86,13 @@ class User
      */
     private $attributes;
 
+    /**
+     * Only used when creating new accounts
+     *
+     * @var string
+     */
+    private $plainPassword;
+
     public function __construct()
     {
         $this->attributes = new ArrayCollection();
@@ -198,5 +205,120 @@ class User
     public function getDob()
     {
         return $this->dob;
+    }
+
+    /**
+     * @param string $plainPassword
+     * @return User
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+        return $this;
+    }
+
+    /**
+     * @param \DateTime|null $dob
+     * @return User
+     */
+    public function setDob($dob)
+    {
+        $this->dob = $dob;
+        return $this;
+    }
+
+    /**
+     * @param string $email
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @param boolean $enabled
+     * @return User
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+        return $this;
+    }
+
+    /**
+     * @param string $firstNames
+     * @return User
+     */
+    public function setFirstNames($firstNames)
+    {
+        $this->firstNames = $firstNames;
+        return $this;
+    }
+
+    /**
+     * @param \DateTime $lastLogin
+     * @return User
+     */
+    public function setLastLogin($lastLogin)
+    {
+        $this->lastLogin = $lastLogin;
+        return $this;
+    }
+
+    /**
+     * @param string $lastNames
+     * @return User
+     */
+    public function setLastNames($lastNames)
+    {
+        $this->lastNames = $lastNames;
+        return $this;
+    }
+
+    /**
+     * @param string $middleNames
+     * @return User
+     */
+    public function setMiddleNames($middleNames)
+    {
+        $this->middleNames = $middleNames;
+        return $this;
+    }
+
+
+    /**
+     * @param string $title
+     * @return User
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @param string $username
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+        return $this;
     }
 }

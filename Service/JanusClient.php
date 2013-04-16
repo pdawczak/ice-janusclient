@@ -60,16 +60,15 @@ class JanusClient
      */
     public function createUser(array $values)
     {
-        try{
+        try {
             $command = $this->client->getCommand('CreateUser', $values);
             $user = $command->execute();
             return $user;
-        }
-        catch(BadResponseException $badResponseException){
-            if(!$this->responseBodyToValidationException(
+        } catch (BadResponseException $badResponseException) {
+            if (!$this->responseBodyToValidationException(
                 $badResponseException->getResponse()->getBody(true),
-                $badResponseException))
-            {
+                $badResponseException)
+            ) {
                 throw $badResponseException;
             }
         }
@@ -135,19 +134,19 @@ class JanusClient
      * @return bool false if the exception could not be thrown
      * @throws \Ice\JanusClientBundle\Exception\ValidationException
      */
-    private function responseBodyToValidationException($responseBody, $previousException = null){
-        try{
+    private function responseBodyToValidationException($responseBody, $previousException = null)
+    {
+        try {
             /** @var $form \Ice\JanusClientBundle\Response\FormError */
             $form = $this->serializer->deserialize(
                 $responseBody,
                 'Ice\\JanusClientBundle\\Response\\FormError',
                 'json'
             );
-            if(!$form->getErrorsAsAssociativeArray()){
+            if (!$form->getErrorsAsAssociativeArray()) {
                 return false;
             }
-        }
-        catch(\Exception $deserializingException){
+        } catch (\Exception $deserializingException) {
             //We can't improve the exception - just re-throw the original
             return false;
         }

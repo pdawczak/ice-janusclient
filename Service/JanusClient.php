@@ -2,15 +2,11 @@
 
 namespace Ice\JanusClientBundle\Service;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Guzzle\Http\Exception\BadResponseException;
 use Guzzle\Plugin\CurlAuth\CurlAuthPlugin;
-use Ice\JanusClientBundle\Entity\User;
-
-use Doctrine\Common\Collections\ArrayCollection;
-
 use Guzzle\Service\Client;
-use Guzzle\Service\Exception\ValidationException as GuzzleValidationException;
-
+use Ice\JanusClientBundle\Entity\User;
 use Ice\JanusClientBundle\Exception\AuthenticationException;
 use Ice\JanusClientBundle\Exception\ValidationException;
 use JMS\Serializer\Serializer;
@@ -28,20 +24,28 @@ class JanusClient
     private $serializer;
 
     /**
-     * @param Client $client
+     * @param Client     $client
      * @param Serializer $serializer
+     * @param string     $username
+     * @param string     $password
      */
-    public function __construct(Client $client, Serializer $serializer)
+    public function __construct(Client $client, Serializer $serializer, $username, $password)
     {
         $this->client = $client;
         $this->serializer = $serializer;
+        $this->client->setConfig(array(
+            'curl.options' => array(
+                'CURLOPT_USERPWD' => sprintf("%s:%s", $username, $password),
+            ),
+        ));
         $this->client->setDefaultHeaders(array(
-            'Accepts' => 'application/json',
+            'Accept' => 'application/json',
         ));
     }
 
     /**
      * @param string $username
+     *
      * @return \Ice\JanusClientBundle\Entity\User
      */
     public function getUser($username)
@@ -56,6 +60,7 @@ class JanusClient
 
     /**
      * @param array $values
+     *
      * @return mixed
      * @throws \Exception|\Guzzle\Http\Exception\BadResponseException|\Guzzle\Service\Exception\ValidationException
      * @throws \Ice\JanusClientBundle\Exception\ValidationException
@@ -90,24 +95,25 @@ class JanusClient
     public function updateAttribute($username, $attributeName, $attributeValue, $updatedBy)
     {
         return $this->client->getCommand('UpdateAttribute', array(
-            'username' => $username,
+            'username'      => $username,
             'attributeName' => $attributeName,
-            'value' => $attributeValue,
-            'updatedBy' => $updatedBy,
+            'value'         => $attributeValue,
+            'updatedBy'     => $updatedBy,
         ))->execute();
     }
 
     public function createAttribute($username, $attributeName, $attributeValue)
     {
         return $this->client->getCommand('CreateAttribute', array(
-            'username' => $username,
+            'username'  => $username,
             'fieldName' => $attributeName,
-            'value' => $attributeValue,
+            'value'     => $attributeValue,
         ))->execute();
     }
 
     /**
      * @param array $filters
+     *
      * @return User[]|ArrayCollection
      */
     public function getUsers(array $filters = array())
@@ -133,6 +139,7 @@ class JanusClient
     /**
      * @param $username
      * @param $password
+     *
      * @return User
      * @throws \Ice\JanusClientBundle\Exception\AuthenticationException when credentials are bad
      * @throws \Exception|\Guzzle\Http\Exception\BadResponseException when an unknown error (eg 500) occurs
@@ -140,23 +147,23 @@ class JanusClient
     public function authenticate($username, $password)
     {
         $this->client->addSubscriber(new CurlAuthPlugin($username, $password));
-        try{
+        try {
             return $this->client->getCommand('Authenticate')->execute();
-        }
-        catch(BadResponseException $e){
-            switch($e->getResponse()->getStatus()){
+        } catch (BadResponseException $e) {
+            switch ($e->getResponse()->getStatus()) {
                 case 401:
                 case 403:
                     throw new AuthenticationException();
-                break;
+                    break;
             }
             throw $e;
         }
     }
 
     /**
-     * @param $responseBody
+     * @param                 $responseBody
      * @param \Exception|null $previousException
+     *
      * @return bool false if the exception could not be thrown
      * @throws \Ice\JanusClientBundle\Exception\ValidationException
      */

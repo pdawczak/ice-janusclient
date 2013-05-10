@@ -25,9 +25,10 @@ class IceJanusClientExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        if(isset($config['base_url'])){
-            $container->setParameter('janus_api_base_url', $config['base_url']);
-        }
+        $container->setParameter('ice_janus_client.service_description_path', __DIR__ . '/../Resources/config/client.json');
+        $container->setParameter('ice_janus_client.base_url', $config['base_url']);
+        $container->setParameter('ice_janus_client.username', $config['username']);
+        $container->setParameter('ice_janus_client.password', $config['password']);
 
         $container->setParameter('janus_client.service_description_path', __DIR__ . '/../Resources/config/client.json');
     }

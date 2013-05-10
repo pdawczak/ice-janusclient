@@ -12,7 +12,7 @@
         <service id="janus_client.guzzle" class="%guzzle.client.class%"
                  public="false">
             <tag name="guzzle.client" />
-            <argument>%janus_api_base_url%</argument>
+            <argument>%ice_janus_client.base_url%</argument>
             <call method="setDescription">
                 <argument type="service" id="janus_client.service_description" />
             </call>
@@ -32,6 +32,8 @@
         <service id="janus.client" class="%janus_client.class%">
             <argument type="service" id="janus_client.guzzle" />
             <argument type="service" id="serializer" />
+            <argument>%ice_janus_client.username%</argument>
+            <argument>%ice_janus_client.password%</argument>
         </service>
     </services>
 </container>

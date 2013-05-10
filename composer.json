@@ -2,7 +2,7 @@
     "name": "ice/janusclient-bundle",
     "type": "symfony-bundle",
     "description": "Client for the ICE Janus API",
-    "licence": "MIT",
+    "license": "MIT",
     "authors": [
         {
             "name": "Stuart Chapman",

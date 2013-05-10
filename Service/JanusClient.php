@@ -150,7 +150,7 @@ class JanusClient
         try {
             return $this->client->getCommand('Authenticate')->execute();
         } catch (BadResponseException $e) {
-            switch ($e->getResponse()->getStatus()) {
+            switch ($e->getResponse()->getStatusCode()) {
                 case 401:
                 case 403:
                     throw new AuthenticationException();

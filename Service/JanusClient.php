@@ -9,38 +9,18 @@ use Guzzle\Service\Client;
 use Ice\JanusClientBundle\Entity\User;
 use Ice\JanusClientBundle\Exception\AuthenticationException;
 use Ice\JanusClientBundle\Exception\ValidationException;
-use JMS\Serializer\Serializer;
+use JMS\Serializer\SerializerInterface;
 
-class JanusClient
+class JanusClient extends Client
 {
     /**
-     * @var \Guzzle\Service\Client
-     */
-    private $client;
-
-    /**
-     * @var \JMS\Serializer\Serializer
+     * @var \JMS\Serializer\SerializerInterface
      */
     private $serializer;
 
-    /**
-     * @param Client     $client
-     * @param Serializer $serializer
-     * @param string     $username
-     * @param string     $password
-     */
-    public function __construct(Client $client, Serializer $serializer, $username, $password)
+    public function setSerializer(SerializerInterface $serializer)
     {
-        $this->client = $client;
         $this->serializer = $serializer;
-        $this->client->setConfig(array(
-            'curl.options' => array(
-                'CURLOPT_USERPWD' => sprintf("%s:%s", $username, $password),
-            ),
-        ));
-        $this->client->setDefaultHeaders(array(
-            'Accept' => 'application/json',
-        ));
     }
 
     /**
@@ -50,7 +30,7 @@ class JanusClient
      */
     public function getUser($username)
     {
-        $user = $this->->getCommand('GetUser', array(
+        $user = $this->getCommand('GetUser', array(
             'username' => $username,
         ))->execute();
 
@@ -89,12 +69,12 @@ class JanusClient
 
         $array = array_merge($values, $array);
 
-        return $this->->getCommand('UpdateUser', $array)->execute();
+        return $this->getCommand('UpdateUser', $array)->execute();
     }
 
     public function updateAttribute($username, $attributeName, $attributeValue, $updatedBy)
     {
-        return $this->->getCommand('UpdateAttribute', array(
+        return $this->getCommand('UpdateAttribute', array(
             'username'      => $username,
             'attributeName' => $attributeName,
             'value'         => $attributeValue,
@@ -104,7 +84,7 @@ class JanusClient
 
     public function createAttribute($username, $attributeName, $attributeValue)
     {
-        return $this->->getCommand('CreateAttribute', array(
+        return $this->getCommand('CreateAttribute', array(
             'username'  => $username,
             'fieldName' => $attributeName,
             'value'     => $attributeValue,
@@ -119,7 +99,7 @@ class JanusClient
     public function getUsers(array $filters = array())
     {
 
-        return $this->->getCommand('GetUsers', array(
+        return $this->getCommand('GetUsers', array(
             'query' => $filters,
         ))->execute();
     }
@@ -131,7 +111,7 @@ class JanusClient
      */
     public function searchUsers($term)
     {
-        return $this->->getCommand('SearchUsers', array(
+        return $this->getCommand('SearchUsers', array(
             'term' => $term,
         ))->execute();
     }
@@ -146,9 +126,9 @@ class JanusClient
      */
     public function authenticate($username, $password)
     {
-        $this->->addSubscriber(new CurlAuthPlugin($username, $password));
+        $this->addSubscriber(new CurlAuthPlugin($username, $password));
         try {
-            return $this->->getCommand('Authenticate')->execute();
+            return $this->getCommand('Authenticate')->execute();
         } catch (BadResponseException $e) {
             switch ($e->getResponse()->getStatusCode()) {
                 case 401:

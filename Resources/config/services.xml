@@ -9,12 +9,23 @@
     </parameters>
 
     <services>
-        <service id="janus_client.guzzle" class="%guzzle.client.class%"
-                 public="false">
+        <service id="janus.client" class="%janus_client.class%">
             <tag name="guzzle.client" />
             <argument>%ice_janus_client.base_url%</argument>
             <call method="setDescription">
                 <argument type="service" id="janus_client.service_description" />
+            </call>
+            <call method="setConfig">
+                <argument type="collection">
+                    <argument type="collection" key="curl.options">
+                        <argument key="CURLOPT_USERPWD">%ice_janus_client.username%:%ice_janus_client.password%</argument>
+                    </argument>
+                </argument>
+            </call>
+            <call method="setDefaultHeaders">
+                <argument type="collection">
+                    <argument key="Accept">application/json</argument>
+                </argument>
             </call>
             <call method="addSubscriber">
                 <argument type="service" id="misd_guzzle.cache.filesystem"/>
@@ -29,11 +40,5 @@
             <argument>%janus_client.service_description_path%</argument>
         </service>
 
-        <service id="janus.client" class="%janus_client.class%">
-            <argument type="service" id="janus_client.guzzle" />
-            <argument type="service" id="serializer" />
-            <argument>%ice_janus_client.username%</argument>
-            <argument>%ice_janus_client.password%</argument>
-        </service>
     </services>
 </container>

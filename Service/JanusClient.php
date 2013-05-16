@@ -9,38 +9,18 @@ use Guzzle\Service\Client;
 use Ice\JanusClientBundle\Entity\User;
 use Ice\JanusClientBundle\Exception\AuthenticationException;
 use Ice\JanusClientBundle\Exception\ValidationException;
-use JMS\Serializer\Serializer;
+use JMS\Serializer\SerializerInterface;
 
-class JanusClient
+class JanusClient extends Client
 {
     /**
-     * @var \Guzzle\Service\Client
-     */
-    private $client;
-
-    /**
-     * @var \JMS\Serializer\Serializer
+     * @var \JMS\Serializer\SerializerInterface
      */
     private $serializer;
 
-    /**
-     * @param Client     $client
-     * @param Serializer $serializer
-     * @param string     $username
-     * @param string     $password
-     */
-    public function __construct(Client $client, Serializer $serializer, $username, $password)
+    public function setSerializer(SerializerInterface $serializer)
     {
-        $this->client = $client;
         $this->serializer = $serializer;
-        $this->client->setConfig(array(
-            'curl.options' => array(
-                'CURLOPT_USERPWD' => sprintf("%s:%s", $username, $password),
-            ),
-        ));
-        $this->client->setDefaultHeaders(array(
-            'Accept' => 'application/json',
-        ));
     }
 
     /**
@@ -56,7 +36,6 @@ class JanusClient
 
         return $user;
     }
-
 
     /**
      * @param array $values
@@ -150,7 +129,7 @@ class JanusClient
         try {
             return $this->client->getCommand('Authenticate')->execute();
         } catch (BadResponseException $e) {
-            switch ($e->getResponse()->getStatus()) {
+            switch ($e->getResponse()->getStatusCode()) {
                 case 401:
                 case 403:
                     throw new AuthenticationException();

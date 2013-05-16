@@ -50,7 +50,7 @@ class JanusClient
      */
     public function getUser($username)
     {
-        $user = $this->client->getCommand('GetUser', array(
+        $user = $this->->getCommand('GetUser', array(
             'username' => $username,
         ))->execute();
 
@@ -68,7 +68,7 @@ class JanusClient
     public function createUser(array $values)
     {
         try {
-            $command = $this->client->getCommand('CreateUser', $values);
+            $command = $this->getCommand('CreateUser', $values);
             $user = $command->execute();
             return $user;
         } catch (BadResponseException $badResponseException) {
@@ -89,12 +89,12 @@ class JanusClient
 
         $array = array_merge($values, $array);
 
-        return $this->client->getCommand('UpdateUser', $array)->execute();
+        return $this->->getCommand('UpdateUser', $array)->execute();
     }
 
     public function updateAttribute($username, $attributeName, $attributeValue, $updatedBy)
     {
-        return $this->client->getCommand('UpdateAttribute', array(
+        return $this->->getCommand('UpdateAttribute', array(
             'username'      => $username,
             'attributeName' => $attributeName,
             'value'         => $attributeValue,
@@ -104,7 +104,7 @@ class JanusClient
 
     public function createAttribute($username, $attributeName, $attributeValue)
     {
-        return $this->client->getCommand('CreateAttribute', array(
+        return $this->->getCommand('CreateAttribute', array(
             'username'  => $username,
             'fieldName' => $attributeName,
             'value'     => $attributeValue,
@@ -119,7 +119,7 @@ class JanusClient
     public function getUsers(array $filters = array())
     {
 
-        return $this->client->getCommand('GetUsers', array(
+        return $this->->getCommand('GetUsers', array(
             'query' => $filters,
         ))->execute();
     }
@@ -131,7 +131,7 @@ class JanusClient
      */
     public function searchUsers($term)
     {
-        return $this->client->getCommand('SearchUsers', array(
+        return $this->->getCommand('SearchUsers', array(
             'term' => $term,
         ))->execute();
     }
@@ -146,9 +146,9 @@ class JanusClient
      */
     public function authenticate($username, $password)
     {
-        $this->client->addSubscriber(new CurlAuthPlugin($username, $password));
+        $this->->addSubscriber(new CurlAuthPlugin($username, $password));
         try {
-            return $this->client->getCommand('Authenticate')->execute();
+            return $this->->getCommand('Authenticate')->execute();
         } catch (BadResponseException $e) {
             switch ($e->getResponse()->getStatusCode()) {
                 case 401:

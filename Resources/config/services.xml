@@ -27,6 +27,9 @@
                     <argument key="Accept">application/json</argument>
                 </argument>
             </call>
+            <call method="setSerializer">
+                <argument type="service" id="jms_serializer" />
+            </call>
             <call method="addSubscriber">
                 <argument type="service" id="misd_guzzle.cache.filesystem"/>
             </call>

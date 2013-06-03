@@ -82,6 +82,41 @@ class JanusClient extends Client
         ))->execute();
     }
 
+    /**
+     * Update multiple attributes at once. This performs a parallel guzzle request so is faster than calling
+     * updateAttribute multiple times, but otherwise equivalent.
+     *
+     * $attributes is a simple array of fieldName - value pairs.
+     *
+     * @param string $username The username whose attributes are to be set
+     * @param string $updatedBy The username of the setter
+     * @param array $attributes An array of fieldName-value pairs. Value should be a plain (not serialized) string
+     * @param bool $replaceNullWithEmptyString (optional) False to error on null instead of sending an empty string.
+     */
+    public function setAttributes($username, $updatedBy, array $attributes, $replaceNullWithEmptyString = true)
+    {
+        $commands = array();
+
+        //Build an UpdateAttribute command for each attribute
+        foreach ($attributes as $fieldName => $value) {
+
+            //Guzzle treats null values as unset so will throw a client-side validation error if a value is set to null
+            if (null === $value && $replaceNullWithEmptyString) {
+                $value = '';
+            }
+
+            $commands[] = $this->getCommand('UpdateAttribute', array(
+                'username' => $username,
+                'attributeName' => $fieldName,
+                'value' => $value,
+                'updatedBy' => $updatedBy,
+            ));
+        }
+
+        //Send commands in parallel
+        $this->execute($commands);
+    }
+
     public function createAttribute($username, $attributeName, $attributeValue)
     {
         return $this->getCommand('CreateAttribute', array(

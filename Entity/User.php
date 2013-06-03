@@ -184,6 +184,28 @@ class User
     }
 
     /**
+     * Gets an attribute value by attribute name. Returns $default if the attribute is not set.
+     *
+     * @param $name
+     * @param mixed $default
+     * @return mixed
+     */
+    public function getAttributeValueByName($name, $default = null)
+    {
+        /** @var Attribute $attribute */
+        $attribute =
+            $this->getAttributes()->filter(function(Attribute $attribute) use ($name) {
+                return $attribute->getFieldName() === $name;
+            })->first();
+
+        if ($attribute) {
+            return $attribute->getValue();
+        }
+
+        return $default;
+    }
+
+    /**
      * @return boolean
      */
     public function getEnabled()

@@ -161,9 +161,11 @@ class JanusClient extends Client
      */
     public function authenticate($username, $password)
     {
-        $this->addSubscriber(new CurlAuthPlugin($username, $password));
         try {
-            return $this->getCommand('Authenticate')->execute();
+            $command = $this->getCommand('Authenticate');
+            $command->prepare();
+            $command->getRequest()->setAuth($username, $password, CURLAUTH_BASIC);
+            return $command->execute();
         } catch (BadResponseException $e) {
             switch ($e->getResponse()->getStatusCode()) {
                 case 401:

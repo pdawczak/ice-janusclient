@@ -61,7 +61,7 @@
                 "dob": {
                     "location": "json",
                     "type": "string",
-                    "required": true
+                    "required": false
                 }
             }
         },
@@ -104,7 +104,7 @@
                 "dob": {
                     "location": "json",
                     "type": "string",
-                    "required": true
+                    "required": false
                 }
             }
         },

@@ -69,7 +69,20 @@ class JanusClient extends Client
 
         $array = array_merge($values, $array);
 
-        return $this->getCommand('UpdateUser', $array)->execute();
+        try {
+            $command = $this->getCommand('UpdateUser', $array);
+            $response = $command->execute();
+            return $response;
+        } catch (BadResponseException $badResponseException) {
+            if (!$this->responseBodyToValidationException(
+                $badResponseException->getResponse()->getBody(true),
+                $badResponseException)
+            ) {
+                throw $badResponseException;
+            }
+        }
+
+        return null;
     }
 
     public function updateAttribute($username, $attributeName, $attributeValue, $updatedBy)

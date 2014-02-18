@@ -130,6 +130,29 @@ class JanusClient extends Client
         $this->execute($commands);
     }
 
+    /**
+     * @param $username
+     * @param $emailAddress
+     * @return mixed
+     */
+    public function updateEmailAddress($username, $emailAddress)
+    {
+        try {
+            $this->getCommand('UpdateEmailAddress', array(
+                'username'      => $username,
+                'email' => $emailAddress
+            ))->execute();
+        } catch (BadResponseException $badResponseException) {
+            if (!$this->responseBodyToValidationException(
+                $badResponseException->getResponse()->getBody(true),
+                $badResponseException)
+            ) {
+                var_dump($badResponseException->getResponse()->getBody(true));
+                throw $badResponseException;
+            }
+        }
+    }
+
     public function createAttribute($username, $attributeName, $attributeValue)
     {
         return $this->getCommand('CreateAttribute', array(

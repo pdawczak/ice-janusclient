@@ -136,6 +136,23 @@
                 }
             }
         },
+        "UpdateEmailAddress": {
+            "httpMethod": "PUT",
+            "uri": "users/{username}/email",
+            "summary": "Set a User email address",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                },
+                "email": {
+                    "location": "json",
+                    "type": "string",
+                    "required": false
+                }
+            }
+        },
         "CreateAttribute": {
             "httpMethod": "POST",
             "uri": "users/{username}/attributes",

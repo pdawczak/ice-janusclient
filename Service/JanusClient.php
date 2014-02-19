@@ -147,7 +147,6 @@ class JanusClient extends Client
                 $badResponseException->getResponse()->getBody(true),
                 $badResponseException)
             ) {
-                var_dump($badResponseException->getResponse()->getBody(true));
                 throw $badResponseException;
             }
         }

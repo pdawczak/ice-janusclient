@@ -152,6 +152,58 @@ class JanusClient extends Client
         }
     }
 
+
+    /**
+     * @param $username
+     * @param $title
+     * @param $firstNames
+     * @param $middleNames
+     * @param $lastNames
+     * @throws \Exception|\Guzzle\Http\Exception\BadResponseException
+     * @return mixed
+     */
+    public function updateName($username, $title, $firstNames, $middleNames, $lastNames)
+    {
+        try {
+            $this->getCommand('UpdateName', array(
+                'username'      => $username,
+                'title' => $title,
+                'firstNames' => $firstNames,
+                'middleNames' => $middleNames,
+                'lastNames' => $lastNames
+            ))->execute();
+        } catch (BadResponseException $badResponseException) {
+            if (!$this->responseBodyToValidationException(
+                $badResponseException->getResponse()->getBody(true),
+                $badResponseException)
+            ) {
+                throw $badResponseException;
+            }
+        }
+    }
+
+    /**
+     * @param $username
+     * @param \DateTime $dob
+     * @throws \Exception|\Guzzle\Http\Exception\BadResponseException
+     */
+    public function updateDob($username, \DateTime $dob = null)
+    {
+        try {
+            $this->getCommand('UpdateDateOfBirth', array(
+                'username'      => $username,
+                'dob' => $dob ? $dob->format('Y-m-d') : ""
+            ))->execute();
+        } catch (BadResponseException $badResponseException) {
+            if (!$this->responseBodyToValidationException(
+                $badResponseException->getResponse()->getBody(true),
+                $badResponseException)
+            ) {
+                throw $badResponseException;
+            }
+        }
+    }
+
     public function createAttribute($username, $attributeName, $attributeValue)
     {
         return $this->getCommand('CreateAttribute', array(

@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Ice\\JanusClientBundle": ""
+            "": "src"
         }
     },
     "target-dir": "Ice/JanusClientBundle"

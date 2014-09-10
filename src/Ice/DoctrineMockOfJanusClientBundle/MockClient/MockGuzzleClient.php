@@ -39,11 +39,11 @@ class MockGuzzleClient extends AbstractGuzzleClient implements JanusUserProvider
         }
     }
 
-    public function getUser($arg)
+    public function getUser($username)
     {
         $command = new MockGetUserCommand(
             $this->getUserRepository(),
-            array('id' => $arg)
+            array('username' => $username)
         );
         return $command->execute();
     }

@@ -35,8 +35,7 @@ class MockGetUserCommand extends AbstractMockCommand
      */
     public function execute()
     {
-//        return $this->userRepository->find($this->args['id']);
-        return $this->userRepository->findOneBy(['username' => $this->args['id']]);
+        return $this->userRepository->findOneBy(['username' => $this->args['username']]);
     }
 
     /**
@@ -53,7 +52,6 @@ class MockGetUserCommand extends AbstractMockCommand
      */
     public function offsetExists($offset)
     {
-        // TODO: Implement offsetExists() method.
     }
 
     /**
@@ -67,7 +65,6 @@ class MockGetUserCommand extends AbstractMockCommand
      */
     public function offsetGet($offset)
     {
-        // TODO: Implement offsetGet() method.
     }
 
     /**
@@ -84,7 +81,6 @@ class MockGetUserCommand extends AbstractMockCommand
      */
     public function offsetSet($offset, $value)
     {
-        // TODO: Implement offsetSet() method.
     }
 
     /**
@@ -98,7 +94,6 @@ class MockGetUserCommand extends AbstractMockCommand
      */
     public function offsetUnset($offset)
     {
-        // TODO: Implement offsetUnset() method.
     }
 
     /**
@@ -108,6 +103,5 @@ class MockGetUserCommand extends AbstractMockCommand
      */
     public function toArray()
     {
-        // TODO: Implement toArray() method.
     }
 }

@@ -56,10 +56,21 @@ DATA
 
     /**
      * @Given /^there are users$/
+     *
+     * Requires attributes:
+     *      id
+     *      username
+     *      title
+     *      first_names
+     *      middle_names
+     *      last_names
+     *      dob
+     *      email
      */
     public function thereAreUsers(TableNode $users)
     {
         $attributeIdentity = 1;
+
         foreach ($users->getHash() as $row) {
             $userFixture = [
                 'id'          => $row['id'],
@@ -77,12 +88,14 @@ DATA
                 if (! in_array($key, $this->baseUserAttributes)) {
                     $camelcaseKey = $this->underscoreToCamelcase($key);
 
-                    $fixtures['\Ice\JanusClientBundle\Entity\AttributeMock']['janus_client_attribute:' . intval($row['id']) . ':' . $camelcaseKey] = array(
+                    $attributeFixtureId = sprintf('janus_client_attribute:%s:%s', $row['id'], $camelcaseKey);
+
+                    $fixtures['\Ice\JanusClientBundle\Entity\AttributeMock'][$attributeFixtureId] = [
                         'id'        => $attributeIdentity,
                         'fieldName' => $camelcaseKey,
                         'value'     => $value,
-                        'user'      => $this->getEntityManager()->getReference('\Ice\JanusClientBundle\Entity\AttributeMock', $row['id'])
-                    );
+                        'user'      => $this->getEntityManager()->getReference('\Ice\JanusClientBundle\Entity\User', $row['id'])
+                    ];
 
                     $attributeIdentity++;
                 }

@@ -57,7 +57,7 @@ DATA
     /**
      * @Given /^there are users$/
      *
-     * Requires attributes:
+     * Required attributes for building User:
      *      id
      *      username
      *      title
@@ -66,6 +66,9 @@ DATA
      *      last_names
      *      dob
      *      email
+     *
+     * All other options will be stored as Attribute belonging
+     * to created User.
      */
     public function thereAreUsers(TableNode $users)
     {

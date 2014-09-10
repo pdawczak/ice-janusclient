@@ -11,6 +11,9 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class JanusClientFixturesContext extends BehatContext implements KernelAwareInterface
 {
+    const CLASS_ATTRIBUTE = '\Ice\JanusClientBundle\Entity\AttributeMock',
+          CLASS_USER      = '\Ice\JanusClientBundle\Entity\User';
+
     private $kernel;
 
     protected $baseUserAttributes = [
@@ -93,18 +96,18 @@ DATA
 
                     $attributeFixtureId = sprintf('janus_client_attribute:%s:%s', $row['id'], $camelcaseKey);
 
-                    $fixtures['\Ice\JanusClientBundle\Entity\AttributeMock'][$attributeFixtureId] = [
+                    $fixtures[self::CLASS_ATTRIBUTE][$attributeFixtureId] = [
                         'id'        => $attributeIdentity,
                         'fieldName' => $camelcaseKey,
                         'value'     => $value,
-                        'user'      => $this->getEntityManager()->getReference('\Ice\JanusClientBundle\Entity\User', $row['id'])
+                        'user'      => $this->getEntityManager()->getReference(self::CLASS_USER, $row['id'])
                     ];
 
                     $attributeIdentity++;
                 }
             }
 
-            $fixtures['\Ice\JanusClientBundle\Entity\User']['janus_client_user:' . $row['id']] = $userFixture;
+            $fixtures[self::CLASS_USER]['janus_client_user:' . $row['id']] = $userFixture;
         }
 
         $this->getMainContext()->getSubcontext('fixtures')->loadFixtures($fixtures);

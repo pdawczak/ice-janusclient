@@ -3,6 +3,7 @@
 namespace Ice\JanusClientBundle\Tests\Service;
 
 use \Guzzle\Http\Exception\BadResponseException;
+use Guzzle\Service\Client;
 use Ice\JanusClientBundle\Service\JanusClient;
 
 class JanusClientTest extends \PHPUnit_Framework_TestCase
@@ -24,15 +25,17 @@ class JanusClientTest extends \PHPUnit_Framework_TestCase
     {
         $this->commandFactory = $this->getMock(self::CLASS_FACTORY, array('factory'));
 
-        $this->client = new JanusClient();
-        $this->client->setCommandFactory($this->commandFactory);
+        $guzzleClient = new Client();
+        $guzzleClient->setCommandFactory($this->commandFactory);
+
+        $this->client = new JanusClient($guzzleClient);
     }
 
     public function testGetUser()
     {
         $testingUsername = 'sample';
 
-        $this->stubCommandFactoryWith('GetUser', ['username' => $testingUsername]);
+        $this->stubCommandFactoryWith('GetUser', [ 'username' => $testingUsername ]);
 
         $this->assertNotEmpty($this->client->getUser($testingUsername));
     }

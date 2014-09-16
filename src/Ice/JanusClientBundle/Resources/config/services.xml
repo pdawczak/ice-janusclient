@@ -5,11 +5,12 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
+        <parameter key="guzzle_client.class">Guzzle\Service\Client</parameter>
         <parameter key="janus_client.class">Ice\JanusClientBundle\Service\JanusClient</parameter>
     </parameters>
 
     <services>
-        <service id="janus.client" class="%janus_client.class%">
+        <service id="guzzle_client" class="%guzzle_client.class%">
             <tag name="guzzle.client" />
             <argument>%ice_janus_client.base_url%</argument>
             <call method="setDescription">
@@ -27,12 +28,14 @@
                     <argument key="Accept">application/json</argument>
                 </argument>
             </call>
-            <call method="setSerializer">
-                <argument type="service" id="jms_serializer" />
-            </call>
             <call method="addSubscriber">
                 <argument type="service" id="misd_guzzle.cache.filesystem"/>
             </call>
+        </service>
+
+        <service id="janus.client" class="%janus_client.class%">
+            <argument type="service" id="guzzle_client" />
+            <argument type="service" id="jms_serializer" />
         </service>
 
         <service id="janus_client.service_description"

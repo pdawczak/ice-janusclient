@@ -12,33 +12,33 @@ class Attribute
      * @JMS\Type("string")
      * @JMS\SerializedName("fieldName")
      */
-    private $fieldName;
+    protected $fieldName;
 
     /**
      * @var string
      *
      * @JMS\Type("string")
      */
-    private $value;
+    protected $value;
 
     /**
      * @var \DateTime
      *
      * @JMS\Type("DateTime")
      */
-    private $created;
+    protected $created;
 
     /**
      * @var \DateTime|null
      *
      * @JMS\Type("DateTime")
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @return \DateTime
      */
-    public function getCreated()
+    protected function getCreated()
     {
         return $this->created;
     }

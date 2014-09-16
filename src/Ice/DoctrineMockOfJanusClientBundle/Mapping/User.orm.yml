@@ -1,0 +1,25 @@
+Ice\JanusClientBundle\Entity\User:
+  type: entity
+  table: janusclient_user
+  id:
+    id:
+      type: integer
+  fields:
+    username:
+      type: string
+    title:
+      type: string
+    firstNames:
+      type: string
+    middleNames:
+      type: string
+    lastNames:
+      type: string
+    dob:
+      type: date
+    email:
+      type: string
+  oneToMany:
+    attributes:
+        targetEntity: AttributeMock
+        mappedBy: user

@@ -1,0 +1,15 @@
+Ice\JanusClientBundle\Entity\AttributeMock:
+  type: entity
+  table: janusclient_attribute
+  id:
+    id:
+      type: integer
+  fields:
+    fieldName:
+      type: string
+    value:
+      type: string
+  manyToOne:
+    user:
+      targetEntity:
+        User

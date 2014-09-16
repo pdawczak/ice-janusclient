@@ -2,21 +2,32 @@
 
 namespace Ice\JanusClientBundle\Service;
 
-use Doctrine\Common\Collections\ArrayCollection;
+
 use Guzzle\Http\Exception\BadResponseException;
-use Guzzle\Plugin\CurlAuth\CurlAuthPlugin;
-use Guzzle\Service\Client;
+use Guzzle\Service\ClientInterface;
+use JMS\Serializer\SerializerInterface;
+
 use Ice\JanusClientBundle\Entity\User;
 use Ice\JanusClientBundle\Exception\AuthenticationException;
 use Ice\JanusClientBundle\Exception\ValidationException;
-use JMS\Serializer\SerializerInterface;
 
-class JanusClient extends Client
+class JanusClient implements JanusUserProvider
 {
+    /**
+     * @var ClientInterface
+     */
+    protected $client;
+    
     /**
      * @var \JMS\Serializer\SerializerInterface
      */
     private $serializer;
+
+    public function __construct(ClientInterface $client, SerializerInterface $serializer = null)
+    {
+        $this->client     = $client;
+        $this->serializer = $serializer;
+    }
 
     public function setSerializer(SerializerInterface $serializer)
     {
@@ -30,7 +41,7 @@ class JanusClient extends Client
      */
     public function getUser($username)
     {
-        $user = $this->getCommand('GetUser', array(
+        $user = $this->client->getCommand('GetUser', array(
             'username' => $username,
         ))->execute();
 
@@ -48,7 +59,7 @@ class JanusClient extends Client
     public function createUser(array $values)
     {
         try {
-            $command = $this->getCommand('CreateUser', $values);
+            $command = $this->client->getCommand('CreateUser', $values);
             $user = $command->execute();
             return $user;
         } catch (BadResponseException $badResponseException) {
@@ -70,7 +81,7 @@ class JanusClient extends Client
         $array = array_merge($values, $array);
 
         try {
-            $command = $this->getCommand('UpdateUser', $array);
+            $command = $this->client->getCommand('UpdateUser', $array);
             $response = $command->execute();
             return $response;
         } catch (BadResponseException $badResponseException) {
@@ -87,7 +98,7 @@ class JanusClient extends Client
 
     public function updateAttribute($username, $attributeName, $attributeValue, $updatedBy)
     {
-        return $this->getCommand('UpdateAttribute', array(
+        return $this->client->getCommand('UpdateAttribute', array(
             'username'      => $username,
             'attributeName' => $attributeName,
             'value'         => $attributeValue,
@@ -118,7 +129,7 @@ class JanusClient extends Client
                 $value = '';
             }
 
-            $commands[] = $this->getCommand('UpdateAttribute', array(
+            $commands[] = $this->client->getCommand('UpdateAttribute', array(
                 'username' => $username,
                 'attributeName' => $fieldName,
                 'value' => $value,
@@ -127,7 +138,7 @@ class JanusClient extends Client
         }
 
         //Send commands in parallel
-        $this->execute($commands);
+        $this->client->execute($commands);
     }
 
     /**
@@ -138,7 +149,7 @@ class JanusClient extends Client
     public function updateEmailAddress($username, $emailAddress)
     {
         try {
-            $this->getCommand('UpdateEmailAddress', array(
+            $this->client->getCommand('UpdateEmailAddress', array(
                 'username'      => $username,
                 'email' => $emailAddress
             ))->execute();
@@ -165,7 +176,7 @@ class JanusClient extends Client
     public function updateName($username, $title, $firstNames, $middleNames, $lastNames)
     {
         try {
-            $this->getCommand('UpdateName', array(
+            $this->client->getCommand('UpdateName', array(
                 'username'      => $username,
                 'title' => $title,
                 'firstNames' => $firstNames,
@@ -190,7 +201,7 @@ class JanusClient extends Client
     public function updateDob($username, \DateTime $dob = null)
     {
         try {
-            $this->getCommand('UpdateDateOfBirth', array(
+            $this->client->getCommand('UpdateDateOfBirth', array(
                 'username'      => $username,
                 'dob' => $dob ? $dob->format('Y-m-d') : ""
             ))->execute();
@@ -206,7 +217,7 @@ class JanusClient extends Client
 
     public function createAttribute($username, $attributeName, $attributeValue)
     {
-        return $this->getCommand('CreateAttribute', array(
+        return $this->client->getCommand('CreateAttribute', array(
             'username'  => $username,
             'fieldName' => $attributeName,
             'value'     => $attributeValue,
@@ -221,7 +232,7 @@ class JanusClient extends Client
     public function getUsers(array $filters = array())
     {
 
-        return $this->getCommand('GetUsers', array(
+        return $this->client->getCommand('GetUsers', array(
             'query' => $filters,
         ))->execute();
     }
@@ -233,7 +244,7 @@ class JanusClient extends Client
      */
     public function searchUsers($term)
     {
-        return $this->getCommand('SearchUsers', array(
+        return $this->client->getCommand('SearchUsers', array(
             'term' => $term,
         ))->execute();
     }
@@ -249,7 +260,7 @@ class JanusClient extends Client
     public function authenticate($username, $password)
     {
         try {
-            $command = $this->getCommand('Authenticate');
+            $command = $this->client->getCommand('Authenticate');
             $command->prepare();
             $command->getRequest()->setAuth($username, $password, CURLAUTH_BASIC);
             return $command->execute();

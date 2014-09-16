@@ -11,7 +11,7 @@ use Ice\JanusClientBundle\Entity\User;
 use Ice\JanusClientBundle\Exception\AuthenticationException;
 use Ice\JanusClientBundle\Exception\ValidationException;
 
-class JanusClient
+class JanusClient implements JanusUserProvider
 {
     /**
      * @var ClientInterface

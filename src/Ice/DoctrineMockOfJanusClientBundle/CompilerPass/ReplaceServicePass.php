@@ -30,8 +30,8 @@ class ReplaceServicePass implements CompilerPassInterface
         );
 
         $definition = $container->getDefinition('janus.client');
-        $definition->setClass('Ice\DoctrineMockOfJanusClientBundle\MockClient\MockGuzzleClient');
-        $constructorArguments[0] = new Reference($emServiceName);
+        $constructorArguments    = $definition->getArguments();
+        $constructorArguments[0] = new Reference('ice.janus_client.doctrine_mock_of_guzzle_client');
         $definition->setArguments($constructorArguments);
     }
 }

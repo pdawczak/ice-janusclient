@@ -10,8 +10,10 @@ use Doctrine\ORM\EntityManager;
 use Ice\JanusClientBundle\Entity\User;
 use Ice\JanusClientBundle\Service\JanusUserProvider;
 
-class MockGuzzleClient extends AbstractGuzzleClient implements JanusUserProvider
+class MockGuzzleClient extends AbstractGuzzleClient
 {
+    const MOCK_CLASS_NAME_TPL = 'Ice\DoctrineMockOfJanusClientBundle\MockCommand\Mock%sCommand';
+
     /**
      * @param EntityManager $entityManager
      */
@@ -25,27 +27,18 @@ class MockGuzzleClient extends AbstractGuzzleClient implements JanusUserProvider
         //Ignore
     }
 
-    public function getCommand($name, array $args = array())
+    public function getCommand($commandName, array $args = array())
     {
-        switch ($name) {
-            case 'GetUser':
-                return new MockGetUserCommand(
-                    $this->getUserRepository(),
-                    $args
-                );
-                break;
-            default:
-                throw new CommandNotImplementedException('Command: '.$name.' is not supported');
-        }
-    }
+        $mockClassName = sprintf(self::MOCK_CLASS_NAME_TPL, ucfirst($commandName));
 
-    public function getUser($username)
-    {
-        $command = new MockGetUserCommand(
+        if (! class_exists($mockClassName)) {
+            throw new CommandNotImplementedException(sprintf('Command: "%s" is not supported', $commandName));
+        }
+
+        return new $mockClassName(
             $this->getUserRepository(),
-            array('username' => $username)
+            $args
         );
-        return $command->execute();
     }
 
     public function setSerializer($anyArg)
@@ -58,25 +51,5 @@ class MockGuzzleClient extends AbstractGuzzleClient implements JanusUserProvider
     private function getUserRepository()
     {
         return $this->entityManager->getRepository('IceDoctrineMockOfJanusClientBundle:User');
-    }
-
-    /**
-     * @param array $filters
-     *
-     * @return User[]|ArrayCollection
-     */
-    public function getUsers(array $filters = array())
-    {
-        // TODO: Implement getUsers() method.
-    }
-
-    /**
-     * @param string $term Search term
-     *
-     * @return User[]|ArrayCollection
-     */
-    public function searchUsers($term)
-    {
-        // TODO: Implement searchUsers() method.
     }
 }

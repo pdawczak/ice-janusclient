@@ -5,12 +5,12 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="guzzle_client.class">Guzzle\Service\ClientInterface</parameter>
+        <parameter key="guzzle_client.class">Guzzle\Service\Client</parameter>
         <parameter key="janus_client.class">Ice\JanusClientBundle\Service\JanusClient</parameter>
     </parameters>
 
     <services>
-        <service id="guzzle_client" class="guzzle_client.class">
+        <service id="guzzle_client" class="%guzzle_client.class%">
             <tag name="guzzle.client" />
             <argument>%ice_janus_client.base_url%</argument>
             <call method="setDescription">

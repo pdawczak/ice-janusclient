@@ -37,7 +37,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function setUriTemplate(UriTemplateInterface $uriTemplate)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -49,7 +48,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function getBaseUrl($expand = true)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -62,7 +60,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function options($uri = null, array $options = array())
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -74,7 +71,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function setCurlMulti(CurlMultiInterface $curlMulti)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -88,7 +84,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function execute($command)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -102,7 +97,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function getIterator($command, array $commandOptions = null, array $iteratorOptions = array())
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -112,7 +106,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function getInflector()
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -124,7 +117,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function setConfig($config)
     {
-//        throw new MethodNotImplementedException();
     }
 
     /**
@@ -136,7 +128,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function getConfig($key = false)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -163,7 +154,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function setSslVerification($certificateAuthority = true, $verifyPeer = true, $verifyHost = 2)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -173,7 +163,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function getDefaultHeaders()
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -185,7 +174,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function setDefaultHeaders($headers)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -195,7 +183,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function getUriTemplate()
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -208,7 +195,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function expandTemplate($template, array $variables = null)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -235,7 +221,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
         array $options = array()
     )
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -248,7 +233,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function setUserAgent($userAgent, $includeDefault = false)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -263,7 +247,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function get($uri = null, $headers = null, $body = null)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -277,7 +260,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function head($uri = null, $headers = null, array $options = array())
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -292,7 +274,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function delete($uri = null, $headers = null, $body = null, array $options = array())
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -307,7 +288,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function put($uri = null, $headers = null, $body = null, array $options = array())
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -324,7 +304,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function post($uri = null, $headers = null, $postBody = null, array $options = array())
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -336,7 +315,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function send($requests)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -352,7 +330,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function getCommand($name, array $args = array())
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -362,7 +339,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function getDescription()
     {
-//        throw new MethodNotImplementedException();
     }
 
     /**
@@ -374,7 +350,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function setBaseUrl($url)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -384,7 +359,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function getCurlMulti()
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -396,7 +370,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function setResourceIteratorFactory(ResourceIteratorFactoryInterface $factory)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -408,7 +381,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function setInflector(InflectorInterface $inflector)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -423,7 +395,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function patch($uri = null, $headers = null, $body = null, array $options = array())
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -435,7 +406,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function setRequestFactory(RequestFactoryInterface $factory)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -447,7 +417,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function setDescription(ServiceDescriptionInterface $service)
     {
-//        throw new MethodNotImplementedException();
     }
 
     /**
@@ -459,7 +428,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function setCommandFactory(CommandFactoryInterface $factory)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -471,7 +439,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public static function factory($config = array())
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -481,7 +448,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public static function getAllEvents()
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -493,7 +459,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function setEventDispatcher(EventDispatcherInterface $eventDispatcher)
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -503,7 +468,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function getEventDispatcher()
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -514,7 +478,6 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function dispatch($eventName, array $context = array())
     {
-        throw new MethodNotImplementedException();
     }
 
     /**
@@ -526,6 +489,5 @@ abstract class AbstractGuzzleClient implements ClientInterface
      */
     public function addSubscriber(EventSubscriberInterface $subscriber)
     {
-//        throw new MethodNotImplementedException();
     }
 }

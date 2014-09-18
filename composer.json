@@ -22,7 +22,8 @@
     },
     "autoload": {
         "psr-0": {
-            "Ice\\JanusClientBundle": "src"
+            "Ice\\JanusClientBundle": "src",
+            "Ice\\DoctrineMockOfJanusClientBundle": "src"
         }
     }
 }

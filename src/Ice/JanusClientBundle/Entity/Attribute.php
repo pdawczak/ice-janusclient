@@ -64,6 +64,10 @@ class Attribute
      */
     public function getValue()
     {
+        $unserializedValue = @unserialize($this->value);
+        if ($this->value === 'b:0;' || $unserializedValue !== false) {
+            return $unserializedValue;
+        }
         return $this->value;
     }
 }

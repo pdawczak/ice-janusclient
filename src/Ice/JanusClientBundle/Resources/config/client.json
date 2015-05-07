@@ -165,7 +165,7 @@
                 },
                 "enabled": {
                     "location": "json",
-                    "type": "bool",
+                    "type": "boolean",
                     "required": false
                 }
             }

@@ -153,6 +153,23 @@
                 }
             }
         },
+        "UpdateEnabled": {
+            "httpMethod": "PUT",
+            "uri": "users/{username}/enabled",
+            "summary": "Set a User enabled",
+            "parameters": {
+                "username": {
+                    "location": "uri",
+                    "type": "string",
+                    "required": true
+                },
+                "enabled": {
+                    "location": "json",
+                    "type": "bool",
+                    "required": false
+                }
+            }
+        },
         "UpdateName": {
             "httpMethod": "PUT",
             "uri": "users/{username}/name",

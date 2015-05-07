@@ -163,6 +163,27 @@ class JanusClient implements JanusUserProvider
         }
     }
 
+    /**
+     * @param $username
+     * @param $enabled
+     * @return mixed
+     */
+    public function updateEnabledAddress($username, $enabled)
+    {
+        try {
+            $this->client->getCommand('UpdateEnabled', array(
+                'username' => $username,
+                'enabled'  => $enabled
+            ))->execute();
+        } catch (BadResponseException $badResponseException) {
+            if (!$this->responseBodyToValidationException(
+                $badResponseException->getResponse()->getBody(true),
+                $badResponseException)
+            ) {
+                throw $badResponseException;
+            }
+        }
+    }
 
     /**
      * @param $username
